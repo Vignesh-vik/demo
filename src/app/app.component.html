@@ -1,0 +1,194 @@
+<div class="row" style="margin-top: 20px;">
+  <!-- Employee List Section -->
+  <div class="col-12 col-md-8">
+    <div class="card" style="border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); transition: transform 0.3s ease-in-out;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+      <div class="card-header bg-success" style="border-radius: 15px 15px 0 0;">
+        <h6 style="color: white; font-weight: bold; animation: fadeIn 1.5s ease-in-out; font-size: 1.2rem;">Employee List</h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <table class="table table-bordered" style="border-radius: 10px; overflow: hidden; border-collapse: collapse; font-size: 1rem;">
+              <thead style="background-color: #f8f9fa; color: #333; animation: slideIn 1.5s ease-in-out;">
+                <tr>
+                  <th>Sr No</th>
+                  <th>Name</th>
+                  <th>Contact No</th>
+                  <th>Email-Id</th>
+                  <th class="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (item of employeeList; track $index) {
+                  <tr style="animation: fadeInRow 0.5s ease-in-out;">
+                    <td>{{$index+1}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.contactNo}}</td>
+                    <td>{{item.emailId}}</td>
+                    <td class="text-center">
+                      <button class="btn btn-primary" (click)="onEdit(item)" style="transition: all 0.3s ease; border-radius: 20px; transform: scale(1);" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 4px 8px rgba(0, 0, 255, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">Edit</button>
+                      <button class="btn btn-danger mx-2" (click)="onDelete(item.empid)" style="transition: all 0.3s ease; border-radius: 20px; transform: scale(1);" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 4px 8px rgba(255, 0, 0, 0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">Delete</button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- New Employee Form Section -->
+  <div class="col-12 col-md-4">
+    <div class="card" style="border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); transition: transform 0.3s ease-in-out;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+      <div class="card-header bg-success" style="border-radius: 15px 15px 0 0;">
+        <h6 style="color: white; font-weight: bold; animation: bounceIn 1.5s ease-in-out; font-size: 1.2rem;">New Employee</h6>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="employeeForm">
+          <div class="row">
+            <div class="col-12">
+              <label for="" style="font-weight: bold; animation: slideInLeft 1s ease-in-out; font-size: 1rem;">Name</label>
+              <input type="text" formControlName="name" class="form-control" style="border-radius: 10px; border: 1px solid #ced4da; transition: all 0.3s ease;" onfocus="this.style.borderColor='#0d6efd'; this.style.boxShadow='0 0 8px rgba(13, 110, 253, 0.5)';" onblur="this.style.borderColor='#ced4da'; this.style.boxShadow='none';">
+              <div class="text-danger" style="font-size: 0.9rem; animation: fadeIn 1s ease-in-out;">
+                @if(employeeForm.controls['name'].touched) {
+                  @if (employeeForm.controls['name'].errors?.['required']) {
+                    <span> Name is Required</span>
+                  } 
+                }
+              </div>
+            </div>
+            <div class="col-12">
+              <label for="" style="font-weight: bold; animation: slideInLeft 1s ease-in-out; font-size: 1rem;">Email-Id</label>
+              <input type="text" formControlName="emailId" class="form-control" style="border-radius: 10px; border: 1px solid #ced4da; transition: all 0.3s ease;" onfocus="this.style.borderColor='#0d6efd'; this.style.boxShadow='0 0 8px rgba(13, 110, 253, 0.5)';" onblur="this.style.borderColor='#ced4da'; this.style.boxShadow='none';">
+            </div>
+            <div class="col-12">
+              <label for="" style="font-weight: bold; animation: slideInRight 1s ease-in-out; font-size: 1rem;">Contact No</label>
+              <input type="text" formControlName="contactNo" class="form-control" style="border-radius: 10px; border: 1px solid #ced4da; transition: all 0.3s ease;" onfocus="this.style.borderColor='#0d6efd'; this.style.boxShadow='0 0 8px rgba(13, 110, 253, 0.5)';" onblur="this.style.borderColor='#ced4da'; this.style.boxShadow='none';">
+            </div>
+            <div class="col-12">
+              <label for="" style="font-weight: bold; animation: slideInLeft 1s ease-in-out; font-size: 1rem;">City</label>
+              <input type="text" formControlName="city" class="form-control" style="border-radius: 10px; border: 1px solid #ced4da; transition: all 0.3s ease;" onfocus="this.style.borderColor='#0d6efd'; this.style.boxShadow='0 0 8px rgba(13, 110, 253, 0.5)';" onblur="this.style.borderColor='#ced4da'; this.style.boxShadow='none';">
+            </div>
+            <div class="col-12">
+              <label for="" style="font-weight: bold; animation: slideInRight 1s ease-in-out; font-size: 1rem;">State</label>
+              <input type="text" formControlName="state" class="form-control" style="border-radius: 10px; border: 1px solid #ced4da; transition: all 0.3s ease;" onfocus="this.style.borderColor='#0d6efd'; this.style.boxShadow='0 0 8px rgba(13, 110, 253, 0.5)';" onblur="this.style.borderColor='#ced4da'; this.style.boxShadow='none';">
+            </div>
+            <div class="col-12">
+              <label for="" style="font-weight: bold; animation: slideInLeft 1s ease-in-out; font-size: 1rem;">Pin Code</label>
+              <input type="text" formControlName="pinCode" class="form-control" style="border-radius: 10px; border: 1px solid #ced4da; transition: all 0.3s ease;" onfocus="this.style.borderColor='#0d6efd'; this.style.boxShadow='0 0 8px rgba(13, 110, 253, 0.5)';" onblur="this.style.borderColor='#ced4da'; this.style.boxShadow='none';">
+              <div class="text-danger" style="font-size: 0.9rem; animation: fadeIn 1s ease-in-out;">
+                @if(employeeForm.controls['pinCode'].touched) {
+                  @if (employeeForm.controls['pinCode'].errors?.['required']) {
+                    <span> Pin Code is Required</span>
+                  } 
+                  @if (employeeForm.controls['pinCode'].errors?.['minlength']) {
+                    <span> Min 6 Characters Required</span>
+                  } 
+                }
+              </div>
+            </div>
+            <div class="col-12">
+              <label for="" style="font-weight: bold; animation: slideInUp 1s ease-in-out; font-size: 1rem;">Address</label>
+              <textarea formControlName="address" class="form-control" style="border-radius: 10px; border: 1px solid #ced4da; transition: all 0.3s ease; resize: none;" onfocus="this.style.borderColor='#0d6efd'; this.style.boxShadow='0 0 8px rgba(13, 110, 253, 0.5)';" onblur="this.style.borderColor='#ced4da'; this.style.boxShadow='none';"></textarea>
+            </div>
+          </div>
+          <div class="row pt-2">
+            <div class="col-6 text-center">
+              <button class="btn btn-secondary" type="button" (click)="reset()" style="border-radius: 20px; transition: all 0.3s ease; transform: scale(1);" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 4px 8px rgba(108, 117, 125, 0.5)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">Reset</button>
+            </div>
+            <div class="col-6 text-center">
+              @if(employeeForm.controls['empid'].value == '1') {
+                <button type="button" class="btn btn-success" [disabled]="employeeForm.invalid" (click)="onSave()" style="border-radius: 20px; transition: all 0.3s ease; transform: scale(1);" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 4px 8px rgba(25, 135, 84, 0.5)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">Save Employee</button>
+              } @else {
+                <button type="button" class="btn btn-warning" [disabled]="employeeForm.invalid" (click)="onUpdate()" style="border-radius: 20px; transition: all 0.3s ease; transform: scale(1);" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 4px 8px rgba(255, 193, 7, 0.5)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">Update Employee</button>
+              } 
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CSS Animations and Media Queries -->
+<style>
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .col-12.col-md-8 {
+      order: 2; /* Move Employee List below the Form */
+    }
+
+    .col-12.col-md-4 {
+      order: 1; /* Move New Employee Form above the List */
+    }
+
+    .table th,
+    .table td {
+      font-size: 0.9rem;
+      padding: 0.5rem;
+    }
+
+    .btn {
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+    }
+
+    h6 {
+      font-size: 1.1rem;
+    }
+
+    label {
+      font-size: 0.9rem;
+    }
+
+    input,
+    textarea {
+      font-size: 0.9rem;
+    }
+  }
+
+  /* Fade In Animation */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Slide In Animation */
+  @keyframes slideIn {
+    from { transform: translateX(-20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+
+  /* Bounce In Animation */
+  @keyframes bounceIn {
+    0% { transform: scale(0.1); opacity: 0; }
+    60% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); }
+  }
+
+  /* Row Fade In Animation */
+  @keyframes fadeInRow {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Slide In Left Animation */
+  @keyframes slideInLeft {
+    from { transform: translateX(-20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+
+  /* Slide In Right Animation */
+  @keyframes slideInRight {
+    from { transform: translateX(20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+
+  /* Slide In Up Animation */
+  @keyframes slideInUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+</style>
